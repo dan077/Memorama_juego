@@ -26,9 +26,12 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/ae43cf70c2.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
     <link rel="stylesheet" href="css/type_game.css">
   </head>
-  <body>
+<body>
     
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -75,8 +78,8 @@
         <div class="row mt-5 d-flex justify-content-center">
           <div class="col-md-8 text-center heading-section ftco-animate">
             <br><br>  <hr>
-            <h2 class="h1"><strong class="px-3">ELIGE EL MODO DE JUEGO</strong></h2>
-            <hr> <br> <br>
+            <h2 class="h1"><strong class="text-uppercase px-3">ELIGE EL MODO DE JUEGO</strong></h2>
+            <hr> <br>  <br>
           </div>
         </div>
         <div class="row">
@@ -84,16 +87,16 @@
           <div class="col-lg-4">
             <div class="card mb-5 mb-lg-0">
               <div class="card-body easy">
-                <h5 class="card-title text-muted text-uppercase text-center">Facil </h5>
+                <h5 class="card-title blanco text-uppercase text-center">Facil </h5>
                 <h6 class="card-price text-center"><i class="fas fa-egg"></i><span class="period"> Novato  </span> <i class="fas fa-egg"> </i></h6>
                 <hr>
                 <ul class="fa-ul">
-                  <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>intentos</li>
-                  <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Tiempo</li>
+                  <li ><span class="fa-li"><i class="fas fa-times"></i></span>intentos</li>
+                  <li ><span class="fa-li"><i class="fas fa-times"></i></span>Tiempo</li>
                   <li><span class="fa-li"><i class="fas fa-check"></i></span>Maximo 10 cartas</li>
-                  <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Puntaje</li>
+                  <li ><span class="fa-li"><i class="fas fa-times"></i></span>Puntaje</li>
                 </ul>
-                <a href="#" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
+                <a id="btn_easy" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
               </div>
             </div>
           </div>
@@ -102,7 +105,7 @@
               <div class="col-lg-4">
                 <div class="card">
                   <div class="card-body hard">
-                    <h5 class="card-title text-muted text-uppercase text-center blanco">Difícil</h5>
+                    <h5 class="card-title blanco text-uppercase text-center">Difícil</h5>
                     <h6 class="card-price text-center"><i class="fas fa-khanda"></i><span class="period"> Experimentado </span> <i class="fas fa-khanda"></i></h6>
                     <hr>
                     <br>
@@ -114,7 +117,7 @@
                     </ul>
                     <br>
 
-                    <a href="#" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
+                    <a id="btn_hard" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
                   </div>
                 </div>
               </div>  
@@ -123,7 +126,7 @@
           <div class="col-lg-4">
             <div class="card mb-5 mb-lg-0">
               <div class="card-body medium">
-                <h5 class="card-title text-muted text-uppercase text-center">Medio</h5>
+                <h5 class="card-title blanco text-uppercase text-center">Medio</h5>
                 <h6 class="card-price text-center"><i class="fas fa-shield-virus"></i><span class="period"> Defensor  </span> <i class="fas fa-shield-virus"></i></h6>
                 <hr>
                 <ul class="fa-ul">
@@ -132,12 +135,27 @@
                   <li><span class="fa-li"><i class="fas fa-check"></i></span>Puntaje <strong>x2</strong></li>
                   <li><span class="fa-li"><i class="fas fa-check"></i></span>Maximo 14 cartas</li>
                 </ul>
-                <a href="#" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
+                <a id="btn_medium" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
               </div>
             </div>
           </div>
     
         </div>
+      </div>
+    </section>
+
+    <section class="ftco-section-parallax pricing" id="playing" style="display: none;">   
+      <div class="tablero" >
+        <div class="row mt-5 d-flex justify-content-center">
+          <div class="col-md-8 text-center heading-section ftco-animate">
+            <br><br>  <hr>
+            <h2 class="h1"><strong class="text-uppercase px-3">Memorama!</strong></h2>
+            <a id="changeDificult" class="btn btn-block btn-primary text-uppercase" style="float:left"> Cambiar Dificultad <i class="fas fa-play" aria-hidden="true"></i></a>
+            <hr> <br>  <br>
+          </div>
+          <div id="tablero" ></div>
+        </div>
+        
       </div>
     </section>
     <hr>
@@ -186,94 +204,6 @@
         </div>
       </div>
     </section>
-
-    <section class="ftco-section testimony-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-          <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Customer Says</span>
-            <h2 class="mb-4">Our satisfied customer says</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
-          </div>
-        </div>
-        <div class="row ftco-animate">
-          <div class="col-md-12">
-            <div class="carousel-testimony owl-carousel ftco-owl">
-              <div class="item text-center">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Dennis Green</p>
-                    <span class="position">Marketing Manager</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item text-center">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-4" style="background-image: url(images/person_2.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Dennis Green</p>
-                    <span class="position">Interface Designer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item text-center">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-4" style="background-image: url(images/person_3.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Dennis Green</p>
-                    <span class="position">UI Designer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item text-center">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Dennis Green</p>
-                    <span class="position">Web Developer</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item text-center">
-                <div class="testimony-wrap p-4 pb-5">
-                  <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">
-                    <span class="quote d-flex align-items-center justify-content-center">
-                      <i class="icon-quote-left"></i>
-                    </span>
-                  </div>
-                  <div class="text">
-                    <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Dennis Green</p>
-                    <span class="position">System Analytics</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     
     <section class="ftco-section ftco-counter" id="section-counter">
       <div class="container">
@@ -305,62 +235,6 @@
               <div class="text">
                 <strong class="number" data-number="8000">0</strong>
                 <span>Average response time on live chat support channel</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="ftco-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-          <div class="col-md-7 text-center heading-section ftco-animate">
-            <span class="subheading">Blog</span>
-            <h2>Recent Blog</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 ftco-animate">
-            <div class="blog-entry">
-              <a href="blog-single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
-              </a>
-              <div class="text p-4 d-block">
-                <div class="meta mb-3">
-                  <div><a href="#">July 12, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ftco-animate">
-            <div class="blog-entry" data-aos-delay="100">
-              <a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
-              </a>
-              <div class="text p-4">
-                <div class="meta mb-3">
-                  <div><a href="#">July 12, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 ftco-animate">
-            <div class="blog-entry" data-aos-delay="200">
-              <a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
-              </a>
-              <div class="text p-4">
-                <div class="meta mb-3">
-                  <div><a href="#">July 12, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
               </div>
             </div>
           </div>
@@ -425,11 +299,11 @@
   
 
   <!-- loader -->
+
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
+
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
@@ -440,14 +314,15 @@
   <script src="js/aos.js"></script>
   <script src="js/jquery.animateNumber.min.js"></script>
   <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/particles.min.js"></script>
   <script src="js/particle.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/index.js"></script>
-    
+  <script src="images/Cartas/Info.js" ></script>
+  <script src="js/index.js" ></script>
+  <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+
+
+  
   </body>
 </html>

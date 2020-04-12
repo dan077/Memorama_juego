@@ -1,4 +1,75 @@
 
+  .tablero{
+    display:block;
+  }
+  
+  
+  .card-containers
+  {
+      font-family: 'Open Sans', sans serif;
+      font-size: 128px;
+      font-weight: bold;
+  
+      width: 250px;
+      height: 250px;
+      margin: 20px 20px;
+  
+      border-radius: 10px;
+  
+      perspective: 1400px;
+      display: flex;
+      justify-content: space-around;
+      float:left;
+      clear: button;
+    
+    
+  }
+  .cardGame
+  {
+      position: relative;
+  
+      height: 100%;
+  
+      border-radius: 10px;
+  
+      width: 100%;
+      transform-style: preserve-3d;
+      font-size:0.4em;
+    
+  }
+  
+  .front,.back,.front>img,.back>img
+  {
+      display: flex;
+  
+      width: 100%;
+      height: 100%;
+      font-size:70%;
+      border-radius: 10px;
+  
+      justify-content: center;
+      align-items: center;
+      backface-visibility: hidden;
+  }
+  
+  .front
+  {
+      color: #fff;
+      background: #2196f3;
+      
+  }
+  
+  .back
+  {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotateY(180deg);
+      color: #2196f3;
+      background: #fff;
+  }  
+  
+  
   .pricing .card {
     border: none;
     border-radius: 1rem;
@@ -23,7 +94,7 @@
   }
   
   .pricing .card-price .period {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
  /* 
   .pricing ul li {
@@ -44,31 +115,78 @@
     transition: all 0.2s;
   }
 
-  .card-body.hard{
-    background: dimgray;
+
+  .card-body.hard,.front.hard
+  {
     color: white !important;
+    background: rgba(222,151,221,1);
+    background: -moz-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(222,151,221,1)), color-stop(100%, rgba(153,66,153,1)));
+    background: -webkit-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -o-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -ms-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: linear-gradient(to right, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de97dd', endColorstr='#994299', GradientType=1 );
   }
 
-  .card-body.easy{
-    background: antiquewhite;
+  .card-body.easy,.front.easy{
+    color: white !important;
+    background: rgba(245,180,211,1);
+    background: -moz-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245,180,211,1)), color-stop(100%, rgba(207,97,152,1)));
+    background: -webkit-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -o-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -ms-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: linear-gradient(to right, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5b4d3', endColorstr='#cf6198', GradientType=1 );
   }
-  .card-body.medium{
-    background: antiquewhite;
+  .card-body.medium,.front.medium{
+    color: white !important;
+    background: rgba(229,170,250,1);
+    background: -moz-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(229,170,250,1)), color-stop(100%, rgba(159,52,201,1)));
+    background: -webkit-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -o-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -ms-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: linear-gradient(to right, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5aafa', endColorstr='#9f34c9', GradientType=1 );
   }
   .card-body.hard>.btn.btn-primary{
     background: center;
     border: 2px solid white;
-    color: white;
+    color:white !important;
+    background: rgba(222,151,221,1);
+    background: -moz-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(222,151,221,1)), color-stop(100%, rgba(153,66,153,1)));
+    background: -webkit-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -o-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: -ms-linear-gradient(left, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    background: linear-gradient(to right, rgba(222,151,221,1) 0%, rgba(153,66,153,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de97dd', endColorstr='#994299', GradientType=1 );
   }
   .card-body.easy>.btn.btn-primary{
-    background: floralwhite;
     border: 2px solid ghostwhite;
-    color:black;
+    color:white;
+    background: rgba(245,180,211,1);
+    background: -moz-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245,180,211,1)), color-stop(100%, rgba(207,97,152,1)));
+    background: -webkit-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -o-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: -ms-linear-gradient(left, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    background: linear-gradient(to right, rgba(245,180,211,1) 0%, rgba(207,97,152,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5b4d3', endColorstr='#cf6198', GradientType=1 );
   }
   .card-body.medium>.btn.btn-primary{
-    background: floralwhite;
     border: 2px solid ghostwhite;
-    color:black;
+    color:white;
+    background: rgba(229,170,250,1);
+    background: -moz-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(229,170,250,1)), color-stop(100%, rgba(159,52,201,1)));
+    background: -webkit-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -o-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: -ms-linear-gradient(left, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    background: linear-gradient(to right, rgba(229,170,250,1) 0%, rgba(159,52,201,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5aafa', endColorstr='#9f34c9', GradientType=1 );
   }
   
 
