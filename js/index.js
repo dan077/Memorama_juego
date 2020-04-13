@@ -11,7 +11,7 @@ class Imagen{
       title: this.titulo,
       text: this.descripcion,
       imageUrl: this.imagen_url,
-      imageWidth: 400,
+      imageWidth: 200,
       imageHeight: 200,
       imageAlt: 'Custom image',
     })
@@ -44,6 +44,7 @@ class Carta
     {
         this.playing = false;
         $(`#${this.id_html}`).off(".flip");
+        $( `#${this.id_html}`).off( "mouseenter" );
     }
     GirarCarta(){
       var flip = $(`#${this.id_html}`).data("flip-model");
@@ -53,6 +54,10 @@ class Carta
     {
       if(this.playing){
         $("#"+this.id_html).flip({reverse: false,speed:200});
+        $( "#"+this.id_html).hover(function(){$( this ).addClass( "pulsacion" );
+          }, function() {
+            $( this ).removeClass( "pulsacion" );
+          })
       }
      
     }
@@ -63,14 +68,72 @@ class Carta
     constructor(modo){ 
       this.listenerActivo = false;
       this.modo = modo;
-      this.cantidadCartas = modo=="easy"? 3 : modo=="medium"? 5 : 7;
-      this.nivel = 1;
+      this.cantidadCartas = modo=="easy"? 2 : modo=="medium"? 3 : 4;
+      this.nivel = 0;
       this.tiempo = modo=="easy"? -1 : modo=="medium"? 40 : 35;
-      this.intentos = modo=="easy"? -1 : modo=="medium"? 15 : 20;
+      this.intentos =  this.cantidadDeIntentos(modo);
       this.tablero = document.getElementById("tablero");//ahorramos busquedas...
       this.Cartas = [];
       this.CartasVector = []; //Contiene la informacion de las cartas creadas.
       this.ClickCarta = [];
+
+      this.MostrarIntentos();
+    }
+
+    cantidadDeIntentos(modo){
+      return modo == "easy"? -1 : modo=="medium"? 15 : 20;
+    }
+
+    restablecerCantidadDeIntentos(){
+      this.intentos = this.cantidadDeIntentos(this.modo);
+      this.MostrarIntentos();
+    }
+
+    MostrarIntentos()
+    {
+      if(this.modo == "easy"){
+        document.getElementById("intentosNum").innerHTML='<i class="fas fa-infinity"></i>';
+      }
+      else{
+        document.getElementById("intentosNum").innerHTML=this.intentos;
+      }
+    }
+
+    MostrarNivel()
+    {
+      document.getElementById("nivel").innerHTML="Nivel actual: "+ parseInt(this.nivel+1);
+    }
+
+    disminuirIntentos()
+    {
+      if(this.modo != "easy"){
+        this.intentos -= 1;
+        this.MostrarIntentos();
+      }
+    }
+
+    winOrLose()
+    {
+      
+      if(this.intentos <= 0 && this.modo != "easy"){
+        console.log("perdiste")
+        return 0; //0 significa que perdio
+        
+      }
+      else
+      {
+        for(var i = 0; i < this.Cartas.length;i++){
+          if(this.Cartas[i].playing){
+           
+            return -1; //-1 significa que aun  no gana ni pierde
+          }
+        }
+        this.nivel += 1;
+        return 1; //1 significa que ganó.
+      
+      }
+      
+      
     }
 
     eventoCLickCarta(objCarta){
@@ -82,6 +145,7 @@ class Carta
       {
           if(objCarta.Get_idCarta() == this.ClickCarta[0].Get_idCarta())
           {
+            this.disminuirIntentos();
             objCarta.GirarCarta();
             objCarta.deshabilitarCarta();
             this.ClickCarta[0].deshabilitarCarta();
@@ -90,19 +154,27 @@ class Carta
             console.log("desabilitadas")
           }
           else{
-            console.log(this.ClickCarta[0])
+            this.disminuirIntentos();
+            var a =this.ClickCarta[0];
+            //this.ClickCarta[0].playing = false; // Para que no le pueda hacer click
+            //objCarta.playing = false; //Para que no le pueda hacer clik
             setTimeout(function(){objCarta.GirarCarta();
-              this.ClickCarta[0].GirarCarta();
-              this.ClickCarta.pop();},400)
+              a.GirarCarta();;},400)
+            this.ClickCarta.pop();
           }
       }
-      else{
+      else
+      {
+        this.disminuirIntentos();
         this.ClickCarta.pop();
       }
-      
+      //this.MostrarIntentos();
     }
 
-    CargarCartasPredeterminadas(){
+    CargarCartasPredeterminadas()
+    {
+      var cantidad = this.cantidadCartas + this.nivel;
+      console.log(cantidad)
       var Info_cartasJSon = getInfo()["Imagen"];
       var Info_cartasJSonAux = getInfo()["Imagen"];
       var eliminado = [];
@@ -136,7 +208,7 @@ class Carta
        }
        id_html += 1;
 
-      }while(Info_cartasJSon.length != 0)
+      }while(Info_cartasJSon.length != 0 && id != cantidad)
           
       eliminado.concat(Info_cartasJSonAux);
       console.log(`Elimindado: ${eliminado}`)
@@ -151,7 +223,8 @@ class Carta
     }
 
     vaciarBaraja(){
-      this.Cartas = this.Cartas.splice(0, this.Cartas.length);
+      //this.Cartas = this.Cartas.splice(0, this.Cartas.length);
+      this.Cartas = []
       this.tablero.innerHTML = "";
       this.listenerActivo = false;
     }
@@ -179,6 +252,7 @@ class Carta
       }
         this.listenerActivo = true;
     }
+
  }
 
 
@@ -193,24 +267,37 @@ $('.vibrar').click(function() {
     rotation += 5;
     $(this).rotate(rotation);
 });
-const baraja = new Baraja("easy");
+var baraja;
 
-function jugar(modo){
+function jugar(){
   $("#game").hide(); 
   $("#playing").show();
-  baraja.modoDeJuego(modo);
+  $("#intentosCont").show();
+  $("#intentosCont").removeClass().addClass("flotante").addClass("front " +modo)
+  //baraja.modoDeJuego(modo);
   baraja.CargarCartasPredeterminadas();
   baraja.activarListener();
+  baraja.MostrarNivel();
 }
 
+
+
 $('#btn_easy').click(function() {
-    jugar("easy");
+    modo ="easy"
+    baraja = new Baraja(modo)
+    jugar(modo);
 });
+
 $('#btn_medium').click(function() {
-  jugar("medium");
+  modo="medium"
+  baraja = new Baraja(modo)
+  jugar(modo);
 });
+
 $('#btn_hard').click(function() {
-  jugar("hard");
+  modo ="hard"
+  baraja = new Baraja(modo)
+  jugar(modo);
 });
 
 
@@ -218,15 +305,71 @@ $('#changeDificult').click(function() {
   $("#game").show();
   tipoJuego="easy";
   $("#playing").hide();
+  $("#intentosCont").hide();
   baraja.vaciarBaraja();
 });
 
 
 function Carta_operacion(id) {
+  console.log(`Nivel: ${baraja.nivel}`)
   var carta = baraja.Cartas[id]
+
   if(carta.playing){
     carta.ActivarEfecto();
     baraja.eventoCLickCarta(carta);
-  }
+    estadoDeLaPartida = baraja.winOrLose()
+   
+    if(estadoDeLaPartida != -1)
+    {
+      if( estadoDeLaPartida == 1)
+      {
+        let nivel = baraja.nivel + 1;
+        Swal.fire({
+          title: 'Custom width, padding, background.',
+          width: 600, title: '¡Felicidades!',
+          text: `¡Has subido de nivel!. Nivel ${nivel}`,
+          imageUrl: 'https://k30.kn3.net/taringa/4/8/9/1/6/3/4/k_v3dia/FD1.gif',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          padding: '3em',
+          backdrop: `
+            rgba(0,0,0,1)
+            url("https://sweetalert2.github.io/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `
+        })
+           
+      }
+      else if(estadoDeLaPartida == 0){
+        baraja.nivel = 0;
+        Swal.fire({
+          title: 'Custom width, padding, background.',
+          width: 600, title: '¡Ups...!',
+          text: '¡Has perdido, intentalo de nuevo!.',
+          imageUrl: 'https://media.giphy.com/media/59d1zo8SUSaUU/giphy.gif',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          padding: '3em',
+          backdrop: `
+            rgba(0,0,0,1)
+            url("https://sweetalert2.github.io/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `
+        })
+      }
+      baraja.vaciarBaraja();
+      baraja.CargarCartasPredeterminadas();
+      baraja.restablecerCantidadDeIntentos();
+      baraja.activarListener();
+      baraja.MostrarNivel();
+    }
+
+      
+    }
+    
 
 }

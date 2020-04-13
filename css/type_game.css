@@ -1,27 +1,23 @@
 
   .tablero{
     display:block;
+    margin: 0 5%;
   }
   
   
   .card-containers
   {
-      font-family: 'Open Sans', sans serif;
-      font-size: 128px;
-      font-weight: bold;
-  
-      width: 250px;
-      height: 250px;
-      margin: 20px 20px;
-  
-      border-radius: 10px;
-  
-      perspective: 1400px;
-      display: flex;
-      justify-content: space-around;
-      float:left;
-      clear: button;
-    
+    font-family: 'Open Sans', sans serif;
+    font-size: 83px;
+    font-weight: bold;
+    width: 154px;
+    height: 154px;
+    margin: 20px 20px;
+    border-radius: 10px;
+    perspective: 1400px;
+    display: flex;
+    justify-content: space-around;
+    float: left;
     
   }
   .cardGame
@@ -229,3 +225,26 @@
 
     float: right;
   }
+
+  .flotante {
+    display:scroll;
+    position: fixed;
+    bottom: 320px;
+    right: 0px;
+    height: 50px;
+    width: 100px;
+    
+    border-radius: 10px;
+    background: rgba(153,66,153,1);
+}
+.flotante>span{
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 31%;
+  /* height: 69%; */
+  /* width: 50%; */
+  margin: -15% 0 0 -25%;
+  font-size: 15px;
+}
+

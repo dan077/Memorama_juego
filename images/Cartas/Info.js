@@ -55,6 +55,11 @@ function getInfo()
                 "titulo": "Microprocesador",
                 "descripcion": "Es el encargado de ejecutar los programas, desde el sistema operativo hasta las aplicaciones de usuario; solo ejecuta instrucciones programadas en lenguaje de bajo nivel, realizando operaciones aritméticas y lógicas simples"
             },
+            {  
+                "url": "11.gif",
+                "titulo": "Seguridad informática",
+                "descripcion": "Es una disciplina que se encarga de proteger la integridad y la privacidad de la información almacenada en un sistema informático"
+            },
         ]
     }
 }
