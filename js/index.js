@@ -238,7 +238,7 @@ class Carta
           Swal.fire({
             title: 'Custom width, padding, background.',
             width: 600, title: '¡Felicidades!',
-            text: `¡Pasaste el juego!`,
+            text: `¡Pasaste el juego! Puntuación: ${this.score}`,
             imageUrl: 'https://comunidad.iebschool.com/iebs/files/2015/03/hacer-venta.gif',
             imageWidth: 400,
             imageHeight: 200,
