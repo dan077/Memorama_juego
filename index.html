@@ -26,8 +26,7 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/ae43cf70c2.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="js/sweetAlert2.js"></script>
 
     <link rel="stylesheet" href="css/type_game.css">
   </head>
@@ -44,7 +43,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="#home" class="nav-link">Home <i class="fas fa-home"></i></a></li>
           <li class="nav-item"><a href="#about" class="nav-link">About <i class="fas fa-info-circle"></i></a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">Contactame <i class="fas fa-search-location"></i></a></li>
+          <li class="nav-item"><a href="#contact" class="nav-link">Contactame <i class="fas fa-search-location"></i></a></li>
           <li class="nav-item cta"><a href="#game" class="nav-link">¡Jugar! <i class="fas fa-gamepad"></i></a></li>
         </ul>
       </div>
@@ -78,13 +77,13 @@
         <div class="row mt-5 d-flex justify-content-center">
           <div class="col-md-8 text-center heading-section ftco-animate">
             <br><br>  <hr>
-            <h2 class="h1"><strong class="text-uppercase px-3">ELIGE EL MODO DE JUEGO</strong></h2>
+            <h2 class="h1"><strong class="text-uppercase px-3" data-aos="fade-up">ELIGE EL MODO DE JUEGO</strong></h2>
             <hr> <br>  <br>
           </div>
         </div>
         <div class="row">
           <!-- Free Tier -->
-          <div class="col-lg-4">
+          <div class="col-lg-4"  data-aos="fade-up">
             <div class="card mb-5 mb-lg-0">
               <div class="card-body easy">
                 <h5 class="card-title blanco text-uppercase text-center">Facil </h5>
@@ -94,7 +93,7 @@
                   <li ><span class="fa-li"><i class="fas fa-times"></i></span>intentos</li>
                   <li ><span class="fa-li"><i class="fas fa-times"></i></span>Tiempo</li>
                   <li><span class="fa-li"><i class="fas fa-check"></i></span>Maximo 10 cartas</li>
-                  <li ><span class="fa-li"><i class="fas fa-times"></i></span>Puntaje</li>
+                  <li ><span class="fa-li"><i class="fas fa-check"></i></span>Puntaje <strong>+4</strong></li>
                 </ul>
                 <a id="btn_easy" class="btn btn-block btn-primary text-uppercase">¡ELEGIR!</a>
               </div>
@@ -102,7 +101,7 @@
           </div>
 
               <!-- Pro Tier -->
-              <div class="col-lg-4">
+              <div class="col-lg-4 "  data-aos="fade-up">
                 <div class="card">
                   <div class="card-body hard">
                     <h5 class="card-title blanco text-uppercase text-center">Difícil</h5>
@@ -123,7 +122,7 @@
               </div>  
 
           <!-- Plus Tier -->
-          <div class="col-lg-4">
+          <div class="col-lg-4 " data-aos="fade-up">
             <div class="card mb-5 mb-lg-0">
               <div class="card-body medium">
                 <h5 class="card-title blanco text-uppercase text-center">Medio</h5>
@@ -153,10 +152,18 @@
             <a id="changeDificult" class="btn btn-block btn-primary text-uppercase" style="float:left"> Cambiar Dificultad <i class="fas fa-play" aria-hidden="true"></i></a>
             <hr> <br>  <br>
           </div>
-          <div id="tablero" ></div>
+          <div id="tablero" class="tablero juego" ></div>
         </div>
-        <div class='flotante' id="intentosCont" ><span>Intentos: <span id="intentosNum"></span></span></div>
+        <ul class='flotante d-flex flex-column bd-highlight mb-3' id="GameInfo" >
+          <li> Intentos: <span id="intentos"></span> </li>
+          <hr>
+          <li> Puntaje: <span id="score"></span> </li>
+          <hr>
+          <li> Tiempo: <span id="time"></span> </li>
+        </ul>
+      </div>
     </section>
+   
     <hr>
     <section class="ftco-section" id="about">
       <div class="container">
@@ -168,7 +175,7 @@
         </div>
         <div class="row">
           <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="portfolio.html" class="image" style="background-image: url('images/profile.gif'); " data-scrollax=" properties: { translateY: '-20%'}">
+            <a class="image" style="background-image: url('images/profile.gif'); " data-scrollax=" properties: { translateY: '-20%'}">
             </a>
             <div class="text">
               <h4 class="subheading">Autor</h4>
@@ -186,100 +193,51 @@
              
             </div>
           </div>
-          <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="portfolio.html" class="image" style="background-image: url('images/work-3.jpg'); " data-scrollax=" properties: { translateY: '-20%'}"></a>
-            <div class="text">
-              <h4 class="subheading">Web Design</h4>
-              <h2 class="heading"><a href="portfolio.html">Even the all-powerful Pointing has no control</a></h2>
-              <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-              <p><a href="portfolio.html" class="btn btn-primary px-4">View Portfolio</a></p>
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-            <span><a href="#" class="btn btn-primary py-3 px-5">View All Projects</a></span>
+            <span><a href="https://github.com/dan077" class="btn btn-primary py-3 px-5">View All Projects (github)</a></span>
           </div>
         </div>
       </div>
     </section>
-    
-    <section class="ftco-section ftco-counter" id="section-counter">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-            <h2>Our achievements</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 text-center">
-              <div class="text">
-                <strong class="number" data-number="400">0</strong>
-                <span>Customers are satisfied with our professional support</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 text-center">
-              <div class="text">
-                <strong class="number" data-number="1000">0</strong>
-                <span>Amazing preset options to be mixed and combined</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 text-center">
-              <div class="text">
-                <strong class="number" data-number="8000">0</strong>
-                <span>Average response time on live chat support channel</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+   
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Snipp.</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <h2 class="ftco-heading-2">Memorama.</h2>
+              <p>"Tenía tan mala memoria que se olvidó de que tenía mala memoria y se acordó de todo."" <small> - Ramón Gómez de la Serna (1891-1963)</small> </p>
             </div>
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4 ml-5">
               <h2 class="ftco-heading-2">Quick Links</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">Home</a></li>
-                <li><a href="#" class="py-2 d-block">Case studies</a></li>
-                <li><a href="#" class="py-2 d-block">Services</a></li>
-                <li><a href="#" class="py-2 d-block">Portfolio</a></li>
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Contact</a></li>
+                <li><a href="#home" class="py-2 d-block">Home</a></li>
+                <li><a href="#about" class="py-2 d-block">About</a></li>
+                <li><a href="#contact" class="py-2 d-block">Contactame</a></li>
+                <li><a href="#game" class="py-2 d-block">Jugar</a></li>
+  
               </ul>
             </div>
           </div>
-          <div class="col-md">
+          <div class="col-md" id ="contact">
              <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Contact Information</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">198 West 21th Street, Suite 721 New York NY 10016</a></li>
-                <li><a href="#" class="py-2 d-block">+ 1235 2355 98</a></li>
-                <li><a href="#" class="py-2 d-block">info@yoursite.com</a></li>
-                <li><a href="#" class="py-2 d-block">email@email.com</a></li>
+                <li><a href="#" class="py-2 d-block">Daniel Vega</a></li>
+                <li><a href="#" class="py-2 d-block">danielvega2000@gmail.com</a></li>
+                <li><a href="#" class="py-2 d-block">danielvegamc@unimagdalena.edu.co</a></li>
               </ul>
             </div>
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                <li class="ftco-animate"><a href="https://github.com/dan077"><span class="fab fa-github"></span></a></li> 
+                <li class="ftco-animate"><a href="#https://www.facebook.com/danvc0/"><span class="icon-facebook"></span></a></li>
               </ul>
             </div>
           </div>
@@ -302,8 +260,6 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
-
-  <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
   <script src="js/jquery.waypoints.min.js"></script>
@@ -319,7 +275,7 @@
   <script src="js/main.js"></script>
   <script src="images/Cartas/Info.js" ></script>
   <script src="js/index.js" ></script>
-  <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+  <script src="js/flip.js"></script>
 
 
   

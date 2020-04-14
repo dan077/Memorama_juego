@@ -70,18 +70,49 @@ class Carta
       this.modo = modo;
       this.cantidadCartas = modo=="easy"? 2 : modo=="medium"? 3 : 4;
       this.nivel = 0;
-      this.tiempo = modo=="easy"? -1 : modo=="medium"? 40 : 35;
+      this.tiempo = this.cantidadDeTiempo(modo);
       this.intentos =  this.cantidadDeIntentos(modo);
       this.tablero = document.getElementById("tablero");//ahorramos busquedas...
       this.Cartas = [];
       this.CartasVector = []; //Contiene la informacion de las cartas creadas.
       this.ClickCarta = [];
-
+      this.score = 0;
       this.MostrarIntentos();
+      this.StartTime();
+      this.intervalo;
+      //intervalo
+    }
+
+    StartTime(){
+      var t = this
+      if(this.modo != "easy")
+        this.intervalo = setInterval(function(){t.tiempo -= 1; t.MostrarTiempo();t.winOrLoseAction()},1000)
+    }
+
+    stopInterval(){
+      var t = this
+      if(this.modo != "easy"){
+
+        clearInterval(t.intervalo);
+        console.log("LO DETUVE")
+      }
+        
     }
 
     cantidadDeIntentos(modo){
       return modo == "easy"? -1 : modo=="medium"? 15 : 20;
+    }
+
+    AumentarScore(){
+      if(this.modo != "easy"){
+        return this.modo=="medium"? this.intentos*2 : this.intentos*4;
+      }
+      return 4;
+     
+    }
+
+    cantidadDeTiempo(modo){
+      return modo=="easy"? -1 : modo=="medium"? 40 : 35;
     }
 
     restablecerCantidadDeIntentos(){
@@ -89,13 +120,33 @@ class Carta
       this.MostrarIntentos();
     }
 
+    mostrarInformacion(){
+      this.MostrarIntentos();
+      this.MostrarNivel();
+      this.MostrarScore();
+      this.MostrarTiempo();
+    }
+
+    MostrarScore(){
+      document.getElementById("score").innerHTML= parseInt(this.score);
+    }
+
+    MostrarTiempo(){
+      if(this.modo == "easy"){
+        document.getElementById("time").innerHTML='<i class="fas fa-infinity"></i>';
+      }else{
+        document.getElementById("time").innerHTML= parseInt(this.tiempo) + "s";
+      }
+      
+    }
+
     MostrarIntentos()
     {
       if(this.modo == "easy"){
-        document.getElementById("intentosNum").innerHTML='<i class="fas fa-infinity"></i>';
+        document.getElementById("intentos").innerHTML='<i class="fas fa-infinity"></i>';
       }
       else{
-        document.getElementById("intentosNum").innerHTML=this.intentos;
+        document.getElementById("intentos").innerHTML=this.intentos;
       }
     }
 
@@ -112,10 +163,21 @@ class Carta
       }
     }
 
+    nivelMaximo(){
+
+      if(this.modo == "easy"){
+        return this.nivel == 3? 2:1; // nivel 3 porque empieza con 4 cartas y tiene maximo 10
+      }
+      else if(this.modo == "medium"){
+        return this.nivel == 5? 2:1; // maximo 15 cartas empieza con 6
+      }
+      return this.nivel == 6? 2:1; // maximo 20 cartas empieza con 8
+    }
+
     winOrLose()
     {
       
-      if(this.intentos <= 0 && this.modo != "easy"){
+      if((this.intentos <= 0  || this.tiempo <= 0 )&& this.modo != "easy"){
         console.log("perdiste")
         return 0; //0 significa que perdio
         
@@ -128,14 +190,99 @@ class Carta
             return -1; //-1 significa que aun  no gana ni pierde
           }
         }
-        this.nivel += 1;
-        return 1; //1 significa que ganó.
+       
+        return  this.nivelMaximo(); //1 significa que ganó.
       
       }
       
       
     }
 
+    subirDeNivel(){
+      this.vaciarBaraja();
+      this.CargarCartasPredeterminadas();
+      this.restablecerCantidadDeIntentos();
+      this.activarListener();
+      this.MostrarNivel();
+    }
+
+    winOrLoseAction(){
+      var estadoDeLaPartida = this.winOrLose()
+   
+      if(estadoDeLaPartida != -1)
+      {
+        this.stopInterval()
+        if( estadoDeLaPartida == 1)
+        {
+          this.nivel += 1;
+          Swal.fire({
+            title: 'Custom width, padding, background.',
+            width: 600, title: '¡Felicidades!',
+            text: `¡Has subido de nivel!. Nivel ${this.nivel +1}`,
+            imageUrl: 'https://k30.kn3.net/taringa/4/8/9/1/6/3/4/k_v3dia/FD1.gif',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            padding: '3em',
+            backdrop: `
+              rgba(0,0,0,1)
+              url("https://sweetalert2.github.io/images/nyan-cat.gif")
+              left top
+              no-repeat
+            `
+          })
+          this.subirDeNivel();
+        }
+        else if(estadoDeLaPartida == 2)
+        {
+          Swal.fire({
+            title: 'Custom width, padding, background.',
+            width: 600, title: '¡Felicidades!',
+            text: `¡Pasaste el juego!`,
+            imageUrl: 'https://comunidad.iebschool.com/iebs/files/2015/03/hacer-venta.gif',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            padding: '3em',
+            backdrop: `
+              rgba(0,0,0,1)
+              url("https://sweetalert2.github.io/images/nyan-cat.gif")
+              left top
+              no-repeat
+            `
+          }).then(function() {
+            $( "#changeDificult" ).trigger( "click" );
+          });;
+          
+        }
+        else if(estadoDeLaPartida == 0){
+          baraja.nivel = 0;
+          Swal.fire({
+            title: 'Custom width, padding, background.',
+            width: 600, title: '¡Ups...!',
+            text: '¡Has perdido, intentalo de nuevo!.',
+            imageUrl: 'https://media.giphy.com/media/59d1zo8SUSaUU/giphy.gif',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            padding: '3em',
+            okOnConfirm: false,
+            backdrop: `
+              rgba(0,0,0,1)
+              url("https://sweetalert2.github.io/images/nyan-cat.gif")
+              left top
+              no-repeat
+            `
+          }).then(function() {
+            $( "#changeDificult" ).trigger( "click" );
+          });
+        }
+        
+      }
+
+        
+      }
+    
     eventoCLickCarta(objCarta){
       
       if(this.ClickCarta < 1 && objCarta.playing){
@@ -146,6 +293,9 @@ class Carta
           if(objCarta.Get_idCarta() == this.ClickCarta[0].Get_idCarta())
           {
             this.disminuirIntentos();
+            this.score += this.AumentarScore();
+            this.MostrarScore()
+            console.log(this.score)
             objCarta.GirarCarta();
             objCarta.deshabilitarCarta();
             this.ClickCarta[0].deshabilitarCarta();
@@ -160,6 +310,7 @@ class Carta
             //objCarta.playing = false; //Para que no le pueda hacer clik
             setTimeout(function(){objCarta.GirarCarta();
               a.GirarCarta();;},400)
+
             this.ClickCarta.pop();
           }
       }
@@ -174,7 +325,6 @@ class Carta
     CargarCartasPredeterminadas()
     {
       var cantidad = this.cantidadCartas + this.nivel;
-      console.log(cantidad)
       var Info_cartasJSon = getInfo()["Imagen"];
       var Info_cartasJSonAux = getInfo()["Imagen"];
       var eliminado = [];
@@ -220,19 +370,25 @@ class Carta
         eliminado.splice(azar,1);
         id_html += 1;
       }
+
+      
     }
 
     vaciarBaraja(){
       //this.Cartas = this.Cartas.splice(0, this.Cartas.length);
+      this.stopInterval();
       this.Cartas = []
       this.tablero.innerHTML = "";
       this.listenerActivo = false;
+      
+      
     }
 
     nuevaCarta(id_html,id_carta,ImageJson)
     { 
       this.Cartas.push(new Carta(String(id_html),String(id_carta),ImageJson)); 
     }
+
     modoDeJuego(modo){
       this.modo = modo;
     }
@@ -258,6 +414,7 @@ class Carta
 
 var rotation = 0;
 var tipoJuego = "";
+
 jQuery.fn.rotate = function(degrees) {
     $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
     return $(this);
@@ -272,12 +429,13 @@ var baraja;
 function jugar(){
   $("#game").hide(); 
   $("#playing").show();
-  $("#intentosCont").show();
-  $("#intentosCont").removeClass().addClass("flotante").addClass("front " +modo)
+  $("#GameInfo").show();
+  var a = "d-flex flex-column bd-highlight mb-3"
+  $("#GameInfo").removeClass().addClass("flotante").addClass("front " +modo+ " " + a)
   //baraja.modoDeJuego(modo);
   baraja.CargarCartasPredeterminadas();
   baraja.activarListener();
-  baraja.MostrarNivel();
+  baraja.mostrarInformacion();
 }
 
 
@@ -305,7 +463,7 @@ $('#changeDificult').click(function() {
   $("#game").show();
   tipoJuego="easy";
   $("#playing").hide();
-  $("#intentosCont").hide();
+  $("#GameInfo").hide();
   baraja.vaciarBaraja();
 });
 
@@ -317,59 +475,5 @@ function Carta_operacion(id) {
   if(carta.playing){
     carta.ActivarEfecto();
     baraja.eventoCLickCarta(carta);
-    estadoDeLaPartida = baraja.winOrLose()
-   
-    if(estadoDeLaPartida != -1)
-    {
-      if( estadoDeLaPartida == 1)
-      {
-        let nivel = baraja.nivel + 1;
-        Swal.fire({
-          title: 'Custom width, padding, background.',
-          width: 600, title: '¡Felicidades!',
-          text: `¡Has subido de nivel!. Nivel ${nivel}`,
-          imageUrl: 'https://k30.kn3.net/taringa/4/8/9/1/6/3/4/k_v3dia/FD1.gif',
-          imageWidth: 400,
-          imageHeight: 200,
-          imageAlt: 'Custom image',
-          padding: '3em',
-          backdrop: `
-            rgba(0,0,0,1)
-            url("https://sweetalert2.github.io/images/nyan-cat.gif")
-            left top
-            no-repeat
-          `
-        })
-           
-      }
-      else if(estadoDeLaPartida == 0){
-        baraja.nivel = 0;
-        Swal.fire({
-          title: 'Custom width, padding, background.',
-          width: 600, title: '¡Ups...!',
-          text: '¡Has perdido, intentalo de nuevo!.',
-          imageUrl: 'https://media.giphy.com/media/59d1zo8SUSaUU/giphy.gif',
-          imageWidth: 400,
-          imageHeight: 200,
-          imageAlt: 'Custom image',
-          padding: '3em',
-          backdrop: `
-            rgba(0,0,0,1)
-            url("https://sweetalert2.github.io/images/nyan-cat.gif")
-            left top
-            no-repeat
-          `
-        })
-      }
-      baraja.vaciarBaraja();
-      baraja.CargarCartasPredeterminadas();
-      baraja.restablecerCantidadDeIntentos();
-      baraja.activarListener();
-      baraja.MostrarNivel();
-    }
-
-      
-    }
-    
-
-}
+    baraja.winOrLoseAction()
+}}
