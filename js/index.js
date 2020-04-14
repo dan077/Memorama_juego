@@ -204,6 +204,8 @@ class Carta
       this.restablecerCantidadDeIntentos();
       this.activarListener();
       this.MostrarNivel();
+      this.tiempo = this.cantidadDeTiempo(this.modo)
+      this.StartTime();
     }
 
     winOrLoseAction(){
