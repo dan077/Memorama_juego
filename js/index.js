@@ -398,7 +398,7 @@ class Carta
     generarCartas(id_carta,id_html,json)
     {
         this.nuevaCarta(id_carta,id_html,json);
-        this.tablero.innerHTML += '<div class="card-containers">  <div class="cardGame" id="'+ id_html +'" onclick="Carta_operacion('+"'"+id_html+"'"+')"> <div class="front '+ this.modo +'"> Memorama </div> <div class="back"><img src='+ 'images/cartas/'+ json.url +'> </div></div></div>'
+        this.tablero.innerHTML += '<div class="card-containers">  <div class="cardGame" id="'+ id_html +'" onclick="Carta_operacion('+"'"+id_html+"'"+')"> <div class="front '+ this.modo +'"> Memorama </div> <div class="back"><img src='+ 'images/Cartas/'+ json.url +'> </div></div></div>'
     }
 
     activarListener()
